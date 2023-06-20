@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h3{
+      width: 200px;
+      height: 100px;
+      padding: 32px 0;
+    }
+    .block {
+      margin: 0 12px;
+      width: 500px;
+    }
+    .line {
+      display: flex;
+    }
+    .cookie-path {
+      color:#aaa;
+      width: 15%;
+    }
+    .cookie-name {
+      color:#666;
+      width: 20%;
+    }
+    .cookie-value {
+      color:#333;
+      width: 60%;
+      word-break:break-all;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .cookie-value:active {
+      background-color: #efefef;
+      animation: cl 500ms;
+    }
+    @keyframes cl {
+      0% {transform: scale(1);}
+      50% {transform: scale(1.1);}
+      100% {transform: scale(1);}
+    }
+  </style>
+</head>
+<body>
+  <div id="inner"></div>
+</body>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script src="./js/popup.js"></script>
+</html>

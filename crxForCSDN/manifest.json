@@ -1,0 +1,43 @@
+{
+	"manifest_version": 2,
+	"name": "缺陷单",
+	"version": "1.0.0",
+	"description": "缺陷单页面扩展",
+	"icons":
+	{
+		"16": "img/icon.png",
+		"48": "img/icon.png",
+		"128": "img/icon.png"
+	},
+	"browser_action": 
+	{
+		"default_icon": "img/icon.png",
+		"default_title": "缺陷图片展示，cookie获取",
+		"default_popup": "popup.html"
+	},
+	"content_scripts": 
+	[
+		{
+			"matches": ["http://defect.hikvision.com.cn/approve/*", "https://blog.csdn.net/*", "https://*.blog.csdn.net/*"],
+			"js": ["js/jquery-1.11.3.min.js", "js/content-script.js"],
+			"css": ["css/custom.css"],
+			"run_at": "document_start"
+		}
+	],
+	"permissions":
+	[
+		"activeTab",
+		"contextMenus",
+		"cookies",
+		"tabs",
+		"notifications", 
+		"webRequest",
+		"webRequestBlocking",
+		"storage",
+		"http://*/*", 
+		"https://*/*"
+	],
+	"web_accessible_resources": ["js/inject.js"],
+	"chrome_url_overrides":{},
+	"omnibox": { "keyword" : "go" }
+}
