@@ -24,7 +24,7 @@ function init () {
       ele.style.userSelect='auto';
     })
   
-    const buttons = $$(".hljs-button") || [];
+    const buttons = document.querySelectorAll(".hljs-button") || [];
     buttons.forEach((btn) => {
       btn.dataset.title = "复制";       // 更改标题
       btn.setAttribute("onclick", "");  // 移除点击事件
