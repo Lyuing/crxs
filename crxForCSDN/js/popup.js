@@ -1,4 +1,6 @@
-chrome.tabs.getSelected(null, (tab) => {
+chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+  // 获取当前标签页
+  const tab = tabs[0];
   // 匹配标签页 url 中的域名
   const domain = tab.url.match(/(\w+):\/\/([^/:]+)(:\d*)?/)[2]
   chrome.cookies.getAll({
@@ -46,5 +48,4 @@ function copy (node) {
       selection.removeAllRanges()
     }, 0)
   }
-
 }

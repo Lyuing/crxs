@@ -1,39 +1,33 @@
-document.addEventListener('DOMContentLoaded', init);
-
-function $$(selector, context) {
-  context = context || document;
-  var elements = context.querySelectorAll(selector);
-  return elements.length == 1
-    ? Array.prototype.slice.call(elements)[0]
-    : Array.prototype.slice.call(elements);
-}
-function copy(str) {
-  navigator.clipboard.writeText(str);
-}
-function addCSS(styles) {
-  let styleSheet = document.createElement("style")
-  styleSheet.innerText = styles
-  document.head.appendChild(styleSheet)
-}
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(()=>{
+    init()
+  }, 0)
+});
 
 
 function init () {
-  // csdn 屏蔽登录复制
-  setTimeout(()=>{
-    document.querySelectorAll("code, pre").forEach(ele=>{
-      ele.style.userSelect='auto';
-    })
+  // 一、csdn 屏蔽登录复制
+  document.querySelectorAll("code, pre").forEach(ele=>{
+    ele.style.userSelect='auto';
+  })
+
+
+  const content = document.querySelector("#content_views")
+  if( content ) {
+    content.setAttribute("oncopy", "")
+    const contentClone = content.cloneNode(true);   // 克隆按钮
+    content.parentNode.replaceChild(contentClone, content);  // 替回按钮
   
     const buttons = document.querySelectorAll(".hljs-button") || [];
     buttons.forEach((btn) => {
-      btn.dataset.title = "复制";       // 更改标题
       btn.setAttribute("onclick", "");  // 移除点击事件
-      let elClone = btn.cloneNode(true);   // 克隆按钮
+      const elClone = btn.cloneNode(true);   // 克隆按钮
+      elClone.dataset.title = "复制";       // 更改标题
       btn.parentNode.replaceChild(elClone, btn);  // 替回按钮
       elClone.addEventListener("click", (e) => {
         // 实现复制
         const parentPreBlock = e.target.closest("pre");
-        const codeBlock = $$("code", parentPreBlock);
+        const codeBlock = parentPreBlock.querySelector("code");
         copy(codeBlock.innerText);
 
         e.target.dataset.title = "复制成功";
@@ -44,22 +38,34 @@ function init () {
         e.preventDefault();
       });
     });
+  
+  }
 
-    let content = $$("#content_views")
-    content.setAttribute("oncopy", "")
-    let contentClone = content.cloneNode(true);   // 克隆按钮
-    content.parentNode.replaceChild(contentClone, content);  // 替回按钮
-  }, 0)
-
-  // 功能二：解除 关注博主即可阅读全文的提示，
+  
+  // 二、解除 关注博主即可阅读全文的提示，
   if(document.querySelector('.btn-readmore')){
-      addCSS( `.hide-article-box{
-        z-index: -1 !important;
-      }`)
+    addCSS( `.hide-article-box{
+      z-index: -1 !important;
+    }`)
+  }
+
+  // 三、processOn 下载破解
+  if(document.querySelector('.water_mark_alert')){
+    const dialog = document.querySelector('.water_mark_alert')
+    const btns = dialog.querySelector('.w_m_r_bottom')
+    // <div class="custom-btn">破解下载限制</div>
+    const vipBtn = document.createElement('div')
+    vipBtn.innerHTML = `<div class="custom-btn">破解下载限制</div>`
+    vipBtn.addEventListener('click', ()=>{
+      // 执行下载
+      exportDomSvg( dialog.querySelector('.water_perview svg') )
+    })
+    btns.appendChild(vipBtn)
   }
 
 
-  // hik 缺陷单显示图片
+
+  // 四、hik 缺陷单显示图片
   setTimeout(()=>{
     // window.indexedDB.databases().then(res=>{
     //   console.log(res)
@@ -120,6 +126,49 @@ function init () {
       
     })
   }, 1500)
+}
+
+
+function copy(str) {
+  navigator.clipboard.writeText(str);
+}
+function addCSS(styles) {
+  let styleSheet = document.createElement("style")
+  styleSheet.innerText = styles
+  document.head.appendChild(styleSheet)
+}
+
+function exportDomSvg(dom) {
+  // 克隆 SVG 节点
+  const svg = dom.cloneNode(true);
+  svg.setAttribute("style", "");
+  svg.removeChild(svg.querySelector('#custom_mark__rect'))
+  console.log( document.title, svg)
+  // 获取 SVG 的序列化字符串
+  const serializer = new XMLSerializer();
+  let svgString = serializer.serializeToString(svg);
+  
+  // 确保 SVG 包含正确的命名空间声明
+  if (!svgString.includes('xmlns="http://www.w3.org/2000/svg"')) {
+    svgString = svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+  
+  // 创建 Blob 对象
+  const blob = new Blob([svgString], { type: 'image/svg+xml' });
+  
+  // 创建下载链接
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${document.title || 'processon-diagram'}.svg`;
+  document.body.appendChild(a);
+  a.click();
+  
+  // 清理
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
 }
 
 const isImg = type => {

@@ -1,0 +1,12 @@
+.custom-btn {
+  border-radius: 4px;
+  background: #5704db;
+  color: #fff;
+  font-size: 13px;
+  width: 92px;
+  height: 32px;
+  line-height: 32px;
+  margin-left: 16px;
+  cursor: pointer;
+  text-align: center;
+}
