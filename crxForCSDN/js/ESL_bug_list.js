@@ -1,21 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(()=>{
-    // 正则匹配地址是否是 ESL_PLAT_BUG/122 这样的数字结尾
-    const reg = /ESL_PLAT_BUG\/(\d+)/
-    if (reg.test(location.href)) {
-      // 详情页
-      initESL_bug()
-    } else {
-      // 列表页
-      initESL_bug_list()
-    }
-  }, 500)
+  setTimeout(checkUrlChange, 500);
 });
 
+// 监听URL变化
+if (typeof window.navigation === 'object' && window.navigation.addEventListener) {
+  // 对于支持 Navigation API 的现代浏览器
+  window.navigation.addEventListener('navigate', (e) => {
+    console.log('URL navigate changed', e.navigationType, e.navigationType === 'push');
+    e.navigationType !== 'replace' && setTimeout(checkUrlChange, 500);
+  });
+}
+
+// URL变化检测函数
+function checkUrlChange() {
+  // 正则匹配地址是否是 ESL_PLAT_BUG/122 这样的数字结尾
+  const reg = /ESL_PLAT_BUG\/(\d+)/
+  if (reg.test(location.href)) {
+    // 详情页
+    initESL_bug()
+  } else {
+    // 列表页
+    initESL_bug_list()
+  }
+}
+
+
 function initESL_bug () {
-  const main = document.querySelector('#main') || document.querySelector('#root')
-  if (main.__esl_delegation_bound) return
-  main.__esl_delegation_bound = true
   onOpenDraw()
 }
 function initESL_bug_list () {
@@ -23,10 +33,6 @@ function initESL_bug_list () {
   const main = document.querySelector('#main') || document.querySelector('#root')
   // console.warn('ESL_bug_list.js init', main)
   const selector = '.ezTable [class^="_leftBorder_"], .ezTable [class*=" _leftBorder_"]'
-
-  // 防止重复绑定
-  if (main.__esl_delegation_bound) return
-  main.__esl_delegation_bound = true
 
   main.addEventListener('click', (ev) => {
     try {
@@ -166,13 +172,19 @@ function onOpenDraw (e) {
     // 确保样式存在
     // ensureLightboxCss()
 
-    // 创建缩略图容器
+    // 创建/更新缩略图容器
+    const existingContainer = document.getElementById('esl-thumb-container')
     const imgContainer = document.createElement('div')
-    // 
+    imgContainer.setAttribute('id', 'esl-thumb-container')
+    
     const lightbox = createLightbox(urls)
     createThumbnails(imgContainer, urls, (index)=> lightbox.open(index))
 
-    // 缩略图挂载到页面上
-    content.appendChild(imgContainer)
+    // 如果已存在缩略图容器则替换，否则追加
+    if (existingContainer) {
+      content.replaceChild(imgContainer, existingContainer)
+    } else {
+      content.appendChild(imgContainer)
+    }
   }, 1000)
 }
