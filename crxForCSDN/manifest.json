@@ -50,7 +50,6 @@
 	"web_accessible_resources": [
 		{
 			"resources": [
-				"js/inject.js",
 				"js/ESL_bug_list.js",
 				"css/custom.css"
 			],
