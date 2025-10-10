@@ -1,36 +1,43 @@
 {
-	"manifest_version": 3.1,
+	"manifest_version": 3,
 	"name": "processOn",
-	"version": "1.0.0",
-	"description": "processOn 扩展",
-	"icons":
-	{
+	"version": "1.1.0",
+	"description": "processOn扩展",
+	"icons": {
 		"16": "img/icon.png",
 		"48": "img/icon.png",
 		"128": "img/icon.png"
 	},
-	"action": 
-	{
+	"action": {
 		"default_icon": "img/icon.png",
 		"default_title": "processOn 扩展下载能力",
 		"default_popup": "popup.html"
 	},
-	"content_scripts": 
-	[
+	"content_scripts": [
 		{
-			"matches": ["https://www.processon.com/*", "https://blog.csdn.net/*", "https://*.blog.csdn.net/*", "http://*/project/ESL_PLAT_BUG/*"],
-			"js": ["js/jquery-1.11.3.min.js", "js/content-script.js", "js/ESL_bug_list.js"],
-			"css": ["css/custom.css"],
+			"matches": [
+				"https://www.processon.com/*",
+				"https://blog.csdn.net/*",
+				"https://*.blog.csdn.net/*",
+				"http://*/project/ESL_PLAT_BUG/*"
+			],
+			"js": [
+				"js/jquery-1.11.3.min.js",
+				"js/content-script.js",
+				"js/ESL_bug_list.js"
+			],
+			"css": [
+				"css/custom.css"
+			],
 			"run_at": "document_start"
 		}
 	],
-	"permissions":
-	[
+	"permissions": [
 		"activeTab",
 		"contextMenus",
 		"cookies",
 		"tabs",
-		"notifications", 
+		"notifications",
 		"webRequest",
 		"storage"
 	],
@@ -40,10 +47,22 @@
 		"https://*.blog.csdn.net/*",
 		"http://*/project/ESL_PLAT_BUG/*"
 	],
-	"web_accessible_resources": [{
-		"resources": ["js/inject.js", "js/ESL_bug_list.js", "css/custom.css"],
-		"matches": ["https://www.processon.com/*", "https://blog.csdn.net/*", "https://*.blog.csdn.net/*"]
-	}],
-	"chrome_url_overrides":{},
-	"omnibox": { "keyword" : "go" }
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"js/inject.js",
+				"js/ESL_bug_list.js",
+				"css/custom.css"
+			],
+			"matches": [
+				"https://www.processon.com/*",
+				"https://blog.csdn.net/*",
+				"https://*.blog.csdn.net/*"
+			]
+		}
+	],
+	"chrome_url_overrides": {},
+	"omnibox": {
+		"keyword": "go"
+	}
 }

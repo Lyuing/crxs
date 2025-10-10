@@ -26,7 +26,7 @@
 
 /* thumbnail small style */
 .esl-thumb-container{padding: 0 24px}
-.esl-thumb{max-width:240px;max-height:80px;margin:6px;object-fit:cover;border-radius:4px;transition:transform .18s ease;box-shadow: 0 0 5px rgba(0,0,0,.5);}
+.esl-thumb{max-width:560px;max-height:440px;margin:6px;object-fit:cover;border-radius:4px;transition:transform .18s ease;box-shadow: 0 0 5px rgba(0,0,0,.5);}
 .esl-thumb:hover{transform:scale(1.03)}
 
 /* hide buttons when only one image */

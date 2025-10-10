@@ -1,12 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(()=>{
-    initESL_bug_list()
+    // 正则匹配地址是否是 ESL_PLAT_BUG/122 这样的数字结尾
+    const reg = /ESL_PLAT_BUG\/(\d+)/
+    if (reg.test(location.href)) {
+      // 详情页
+      initESL_bug()
+    } else {
+      // 列表页
+      initESL_bug_list()
+    }
   }, 500)
 });
 
-
+function initESL_bug () {
+  const main = document.querySelector('#main') || document.querySelector('#root')
+  if (main.__esl_delegation_bound) return
+  main.__esl_delegation_bound = true
+  onOpenDraw()
+}
 function initESL_bug_list () {
-  // 一、简单云缺陷单显示图片
   // 使用事件代理：在 #main 上注册一次 click 监听，匹配子元素选择器，避免关心加载时机
   const main = document.querySelector('#main') || document.querySelector('#root')
   // console.warn('ESL_bug_list.js init', main)
