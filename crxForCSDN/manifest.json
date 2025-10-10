@@ -1,5 +1,5 @@
 {
-	"manifest_version": 3,
+	"manifest_version": 3.1,
 	"name": "processOn",
 	"version": "1.0.0",
 	"description": "processOn 扩展",
@@ -18,8 +18,8 @@
 	"content_scripts": 
 	[
 		{
-			"matches": ["https://www.processon.com/*", "https://blog.csdn.net/*", "https://*.blog.csdn.net/*"],
-			"js": ["js/jquery-1.11.3.min.js", "js/content-script.js"],
+			"matches": ["https://www.processon.com/*", "https://blog.csdn.net/*", "https://*.blog.csdn.net/*", "http://*/project/ESL_PLAT_BUG/*"],
+			"js": ["js/jquery-1.11.3.min.js", "js/content-script.js", "js/ESL_bug_list.js"],
 			"css": ["css/custom.css"],
 			"run_at": "document_start"
 		}
@@ -37,10 +37,11 @@
 	"host_permissions": [
 		"https://www.processon.com/*",
 		"https://blog.csdn.net/*",
-		"https://*.blog.csdn.net/*"
+		"https://*.blog.csdn.net/*",
+		"http://*/project/ESL_PLAT_BUG/*"
 	],
 	"web_accessible_resources": [{
-		"resources": ["js/inject.js"],
+		"resources": ["js/inject.js", "js/ESL_bug_list.js", "css/custom.css"],
 		"matches": ["https://www.processon.com/*", "https://blog.csdn.net/*", "https://*.blog.csdn.net/*"]
 	}],
 	"chrome_url_overrides":{},
