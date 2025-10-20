@@ -4,6 +4,11 @@ const { minify } = require('uglify-js');
 const CleanCSS = require('clean-css');
 const htmlMinifier = require('html-minifier');
 
+const  config = {
+  srcDir: 'processOn&CSDN',
+  distDir: 'dist'
+};
+
 /**
  * Chrome Extension Builder Class
  * 用于构建和压缩浏览器扩展资源
@@ -177,8 +182,5 @@ class ExtensionBuilder {
 }
 
 // 实例化并执行构建
-const builder = new ExtensionBuilder({
-  srcDir: 'crxForCSDN',
-  distDir: 'dist'
-});
+const builder = new ExtensionBuilder(config);
 builder.build();

@@ -205,7 +205,7 @@ function createLightbox(urls) {
       setTimeout(()=> mediaContainer.classList.add('show'), 30)
     })
 
-    currentIndex = startIndex ? startIndex-0 : currentIndex
+    currentIndex = (startIndex || startIndex === 0)  ? startIndex-0 : currentIndex
     showItem(mediaContainer)
 
     function close() {
